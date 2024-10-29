@@ -33,7 +33,7 @@ public class SearchUtils {
    */
   static int iterativeBinarySearch(int[] vals, int val) throws Exception {
     int lb = 0;
-    int ub = vals.length;
+    int ub = vals.length - 1;
 
     while (lb <= ub) {
       int mid = lb + (ub - lb) / 2;
@@ -41,7 +41,7 @@ public class SearchUtils {
       if (vals[mid] == val) {
         return mid;
       } else if (val < vals[mid]) {
-        ub = mid;
+        ub = mid - 1;
       } else {
         lb = mid + 1;
       }
@@ -68,8 +68,12 @@ public class SearchUtils {
    *   values[index] == val
    */
   static int recursiveBinarySearch(int[] vals, int val) throws Exception {
-    return 0;   // STUB
+    SearchUtils.count++;
+    System.out.println(count);
+    return rbsHelper(vals, 0, vals.length - 1, val);
   } // recursiveBinarySearch
+
+  static int count = 0;
 
   /**
    * Search for val in a subarray of values, return the index of an 
@@ -94,7 +98,19 @@ public class SearchUtils {
    *   values[index] == val
    */
   static int rbsHelper(int[] vals, int lb, int ub, int val) throws Exception {
-    return 0;   // STUB
+    if(lb > ub) {
+      throw new Exception();
+    } // if
+
+    int mid = lb + (ub - lb) / 2;
+    if (vals[mid] == val) {
+      return mid;
+    } else if (val < vals[mid]) {
+      return rbsHelper(vals, lb, mid - 1, val);
+    } else {
+      return rbsHelper(vals, mid + 1, ub, val);
+    } // if/else
+    
   } // rbsHelper
 
   // +----------------+----------------------------------------------
@@ -145,7 +161,7 @@ public class SearchUtils {
    *   values[index] == val
    */
   public static int binarySearch(int[] vals, int val) throws Exception {
-    return iterativeBinarySearch(vals, val);
+    return recursiveBinarySearch(vals, val);
   } // binarySearch
 
 } // class SearchUtils
